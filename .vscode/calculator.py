@@ -1,54 +1,62 @@
-import customtkinter as ctk
-
-# Set appearance and theme
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
-
-# Create main app window
-app = ctk.CTk()
-app.geometry("300x400")
-app.title("Simple Calculator")
-
-# Entry field to show input/output
-entry = ctk.CTkEntry(app, width=250, font=('Arial', 20))
-entry.grid(row=0, column=0, columnspan=4, padx=10, pady=20)
-
-# Function to update entry when buttons are pressed
-def button_click(value):
-    entry.insert("end", value)
-
-# Function to evaluate the expression
-def calculate():
+import customtkinter
+from tkinter import END
+#fuctionality part
+def answer():
+    expression = entryfield.get("1.0","end-1c")
     try:
-        result = eval(entry.get())
-        entry.delete(0, "end")
-        entry.insert("end", str(result))
-    except Exception:
-        entry.delete(0, "end")
-        entry.insert("end", "Error")
-
-# Function to clear entry field
+        result = eval(expression)
+        entryfield.insert("end",f"\n{result}")
+    except Exception as e:
+        entryfield.insert("end","\nError")
+    entryfield
 def clear():
-    entry.delete(0, "end")
+    entryfield.delete(0,END)
 
-# Create calculator buttons
-buttons = [
-    ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('+', 1, 3),
-    ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('-', 2, 3),
-    ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('*', 3, 3),
-    ('C', 4, 0), ('0', 4, 1), ('=', 4, 2), ('/', 4, 3),
-]
+def click(number):
+    entryfield.insert(END,number)
 
-# Add buttons to the app
-for (text, row, col) in buttons:
-    if text == '=':
-        action = calculate
-    elif text == 'C':
-        action = clear
-    else:
-        action = lambda x=text: button_click(x)
 
-    ctk.CTkButton(app, text=text, command=action, width=50).grid(row=row, column=col, padx=5, pady=5)
+#GUI part
+root =  customtkinter.CTk()
+root.title("Modern Calculator")
+root.geometry("320x320")
+root.config(bg = 'black')
+entryfield = customtkinter.CTkTextbox(root, font = ('arial',20,'bold'),fg_color = 'black',text_color= 'white',border_color = 'blue',width = 280,height = 60)
+entryfield.grid(row= 0,column = 0,padx = 10,pady = 10, columnspan = 4)
 
-# Run the app
-app.mainloop()
+b7 = customtkinter.CTkButton(root,text = '7',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('7'))
+b7.grid(row = 1, column = 0,pady  = 10)
+b8 = customtkinter.CTkButton(root,text = '8',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('8'))
+b8.grid(row = 1, column = 1)
+b9 = customtkinter.CTkButton(root,text = '9',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('9'))
+b9.grid(row = 1, column = 2)
+bplus = customtkinter.CTkButton(root,text = '+',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',fg_color='orange3',hover_color= 'orange3',command = lambda:click('+'))
+bplus.grid(row = 1, column = 3)
+
+b4 = customtkinter.CTkButton(root,text = '4',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('4'))
+b4.grid(row = 2, column = 0,pady = 10)
+b5 = customtkinter.CTkButton(root,text = '5',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('5'))
+b5.grid(row = 2, column = 1)
+b6 = customtkinter.CTkButton(root,text = '6',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('6'))
+b6.grid(row = 2, column = 2)
+bminus = customtkinter.CTkButton(root,text = '-',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',fg_color='orange3',hover_color= 'orange3',command = lambda:click('-'))
+bminus.grid(row = 2, column =3)
+b1 = customtkinter.CTkButton(root,text = '1',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('1'))
+b1.grid(row = 3, column = 0,pady = 10)
+b2 = customtkinter.CTkButton(root,text = '2',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('2'))
+b2.grid(row = 3, column = 1)
+b3 = customtkinter.CTkButton(root,text = '3',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('3'))
+b3.grid(row = 3, column = 2)
+bminus = customtkinter.CTkButton(root,text = '*',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',fg_color='orange3',hover_color= 'orange3',command = lambda:click('*'))
+bminus.grid(row = 3, column = 3)
+b0 = customtkinter.CTkButton(root,text = '0',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('0'))
+b0.grid(row = 4, column = 0,pady=10)
+bdot = customtkinter.CTkButton(root,text = '.',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',command = lambda:click('.'))
+bdot.grid(row = 4, column = 1)
+bcancel = customtkinter.CTkButton(root,text = 'C',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',fg_color='red3',hover_color= 'red3',command = clear)
+bcancel.grid(row = 4, column = 2)
+bdiv = customtkinter.CTkButton(root,text = '/',font = ('arial',20,'bold'),width = 60,bg_color = 'black',cursor = 'hand2',fg_color='orange3',hover_color= 'orange3',command = lambda:click('/'))
+bdiv.grid(row = 4, column = 3)
+bequal = customtkinter.CTkButton(root,text = '=',font = ('arial',20,'bold'),width = 200,bg_color = 'black',cursor = 'hand2',fg_color='dark green',hover_color= 'dark green',command = answer)
+bequal.grid(row = 5,column = 0, columnspan = 4,pady = 10)
+root.mainloop()
